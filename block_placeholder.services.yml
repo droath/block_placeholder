@@ -1,0 +1,4 @@
+services:
+  block_placeholder.manager:
+    class: \Drupal\block_placeholder\BlockPlaceholderManager
+    arguments: [ '@entity_type.manager' ]
