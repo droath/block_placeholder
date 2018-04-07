@@ -3,6 +3,7 @@
 namespace Drupal\block_placeholder\Plugin\Block;
 
 use Drupal\block_placeholder\BlockPlaceholderManagerInterface;
+use Drupal\block_placeholder\Entity\BlockPlaceholderInterface;
 use Drupal\block_placeholder\Entity\BlockPlaceholderReference;
 use Drupal\Core\Annotation\Translation;
 use Drupal\Core\Block\Annotation\Block;
@@ -101,36 +102,47 @@ class BlockPlaceholder extends BlockBase implements ContainerFactoryPluginInterf
     if (!$this->hasBlockPlaceholder()) {
       return [];
     }
+    /** @var BlockPlaceholderInterface $entity */
     $entity = $this->getBlockPlaceholderEntity();
 
+    if (!$entity instanceof BlockPlaceholderInterface) {
+      return [];
+    }
     $elements = [];
     $cache_tags = [];
 
-    foreach ($entity->loadReferences() as $entity) {
-      if (!$entity instanceof ContentEntityInterface) {
+    /** @var ContentEntityInterface $reference */
+    foreach ($entity->loadReferences() as $reference) {
+      if (!$reference instanceof ContentEntityInterface) {
         continue;
       }
-      $weight = $entity->block_placeholder_weight->value;
+      $weight = $reference->block_placeholder_weight->value;
       $renderer = $this->entityTypeManager
-        ->getViewBuilder($entity->getEntityTypeId());
-      $cache_tags = array_merge($cache_tags, $entity->getCacheTags());
+        ->getViewBuilder($reference->getEntityTypeId());
+      $cache_tags = array_merge($cache_tags, $reference->getCacheTags());
 
       if (isset($elements[$weight])) {
         $weight = $this->increaseWeight($elements, $weight);
       }
 
-      $elements[$weight] = $renderer->view($entity);
+      $elements[$weight] = $renderer->view($reference);
     }
     ksort($elements, SORT_NUMERIC);
 
     // Re-key the array index after the sort order has been applied.
     $elements = array_values($elements);
+    $elements['#has_reference'] = FALSE;
 
-    return $elements + [
-      '#cache' => [
-        'tags' => $cache_tags
-      ]
-    ];
+    if (!empty($cache_tags)) {
+      $elements += [
+        '#cache' => [
+          'tags' => $cache_tags
+        ],
+        '#has_reference' => TRUE,
+      ];
+    }
+
+    return $elements;
   }
 
   /**
