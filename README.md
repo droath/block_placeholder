@@ -12,17 +12,17 @@ Installation
   https://www.drupal.org/documentation/install/modules-themes/modules-8
 
 
-Configuration
+Initial Setup
 ------------
 
 After the installation, you have to create a Block Placeholder. You'll be able to define what block types are allowed to be referenced. As well as how many references can be associated with the particular placeholder.
 
 Block placeholders can be created at: `/admin/structure/block/block-placeholder`
 
-After you've created a block placeholder you'll need to setup where that block content should be rendered. Navigate to `/admin/structure/block` and click `Place block`, now select the `Block Placeholder` block type. 
+After you've created a block placeholder you'll need to setup where that block content should be rendered. Navigate to `/admin/structure/block` and click `Place block`, then select the `Block Placeholder` block type. 
 
 Select the block placeholder you've created. Go ahead and set your block name accordingly, and click save.
 
-Now, when you create any block content you'll be able to associate it from the block edit form, to a particular block placeholder. Which the content then will be rendered in the appropriate region.
+Now, when you create any block content you'll be able to associate it from the block edit form, to a particular block placeholder. The content will be rendered in the appropriate placeholder that's contained in the desired region.
 
-After block content has been referenced to a block placeholder, you'll be able to order the content at: `/admin/structure/block/block-placeholder/{INPUT_PLACEHOLDER_ID}/order`. You're also able to set the weight, which reflects the order of the content on the block content edit form.
+After block content has been referenced to a block placeholder, you'll be able to order the content `/admin/structure/block/block-placeholder/{INPUT_PLACEHOLDER_ID}/order`. You're also able to set the weight in the block content edit form to control the ordering of the content.
