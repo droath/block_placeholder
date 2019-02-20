@@ -3,7 +3,7 @@ Block Placeholder
 
 The block placeholder module allows content editors to associate block content to a particular block placeholder. Yes, this is very similar to how block regions work, but allows for a much easier configuration deployment process. As block content placement information is stored in configuration, and depends on the block content which may or may not exist yet. 
 
-As a developer you'll be able to set a block placeholder in a block region. The placeholder can be configured to allowed certain block types to reference it. No more having to sync block content along with the block placement configurations. So you can say goodbye to those "This block is broken or missing" messages after deploying your configurations. 
+As a developer you'll be able to set a block placeholder in a block region. The placeholder can be configured to allow certain block types to reference it. No more having to sync block content along with the block placement configurations. So you can say goodbye to those "This block is broken or missing" messages after deploying your configurations. 
 
 Installation
 ------------
